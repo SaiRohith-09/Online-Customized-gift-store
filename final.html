@@ -528,12 +528,13 @@ body .dribbble img {
             border-color: #1976d2;
             box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
         }
-
-    </style>
+        .order.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        }
+</style>
   </head>
   <body>
-
-
     <div class="container">
       <h1>Enter UPI Details</h1>
       <form>
@@ -566,9 +567,10 @@ body .dribbble img {
           </button>
       </form>
   </div>
-
   </body>
   <script>
+
+
     $(".order").click(function (e) {
     let button = $(this);
 
@@ -579,5 +581,49 @@ body .dribbble img {
         }, 10000);
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const upiId = document.getElementById("upi-id");
+    const upiPin = document.getElementById("upi-pin");
+    const orderButton = document.querySelector(".order");
+
+    function checkInputs() {
+        if (upiId.value.trim() !== "" && upiPin.value.trim() !== "") {
+            orderButton.classList.remove("disabled");
+            orderButton.classList.remove("clicked"); // Reset animation class
+        } else {
+            orderButton.classList.add("disabled");
+        }
+    }
+
+    upiId.addEventListener("input", checkInputs);
+    upiPin.addEventListener("input", checkInputs);
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent page refresh
+
+        if (!orderButton.classList.contains("disabled")) {
+            orderButton.classList.add("clicked"); // Trigger animation
+
+            setTimeout(() => {
+                orderButton.classList.remove("clicked"); // Reset animation after playing
+                
+                // ✅ Clear input fields after animation
+                upiId.value = "";
+                upiPin.value = "";
+
+                // ✅ Disable the button again until new input is entered
+                orderButton.classList.add("disabled");
+
+                // ✅ Show success message and redirect to index.html
+                alert("Order Placed Successfully!");
+                window.location.href = "index.html"; // Redirect to home page
+
+            }, 3000); // Adjust timing based on animation duration
+        }
+    });
+});
+
   </script>
 </html>
