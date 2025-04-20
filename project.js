@@ -226,3 +226,32 @@ document.addEventListener("DOMContentLoaded", function () {
         userNameDisplay.textContent = "Welcome, Guest!";
     }
 });
+// Show/hide button on scroll
+window.addEventListener("scroll", function () {
+    const btn = document.getElementById("backToTopBtn");
+    if (window.scrollY > 300) {
+        btn.style.display = "block";
+    } else {
+        btn.style.display = "none";
+    }
+  });
+  
+  // Scroll to top on click
+  document.getElementById("backToTopBtn").addEventListener("click", function () {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+  });
+  
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const username = localStorage.getItem("loggedInUser");
+    const userNameDisplay = document.getElementById("user-name");
+  
+    if (username && userNameDisplay) {
+        userNameDisplay.textContent = `Welcome, ${username}!`;
+    }
+  });
+  
+  
